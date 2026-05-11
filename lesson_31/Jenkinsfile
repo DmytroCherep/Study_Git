@@ -5,20 +5,24 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                sh 'pip3 install -r requirements.txt'
+                dir('lesson_31') {
+                    sh 'pip3 install -r requirements.txt'
+                }
             }
         }
 
         stage('Run tests') {
             steps {
-                sh 'python3 -m pytest --junitxml=result.xml'
+                dir('lesson_31') {
+                    sh 'python3 -m pytest --junitxml=result.xml'
+                }
             }
         }
     }
 
     post {
         always {
-            junit 'result.xml'
+            junit 'lesson_31/result.xml'
         }
     }
 }
