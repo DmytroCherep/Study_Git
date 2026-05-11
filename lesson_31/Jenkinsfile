@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Install dependencies') {
+            steps {
+                dir('lesson_31') {
+                    sh 'pip3 install -r requirements.txt'
+                }
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                dir('lesson_31') {
+                    sh 'python3 -m pytest --junitxml=result.xml'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            junit 'lesson_31/result.xml'
+        }
+    }
+}
